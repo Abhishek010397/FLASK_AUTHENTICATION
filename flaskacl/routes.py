@@ -16,16 +16,11 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user.username == 'admin':
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                return redirect(url_for('dashboard'))
-            else:
-                flash('Login Unsuccessful')
-        elif user.username != 'admin':
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                return render_template('user.html')
+        if bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Login Unsuccessful')
     return render_template('login.html', form=form)
 
 @app.route('/logout', methods=['GET','POST'])
