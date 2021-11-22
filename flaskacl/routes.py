@@ -66,6 +66,7 @@ def role():
     return render_template('amazon.html')
 
 
-
-            
+def roles():
+    user= User.query.filter_by(username='Admin').first()
+    user
 

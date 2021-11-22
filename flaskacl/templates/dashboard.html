@@ -15,7 +15,7 @@
     You can find all your Information
 </p></br>
 
-   {% if current_user.username == 'Admin' %}
+   {% if current_user.role == 'Admin' %}
      <a href = "{{url_for('role')}}"><button>Role</button></a>
    {% endif %}
 
