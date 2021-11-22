@@ -54,19 +54,8 @@ def register():
     return render_template('register.html', form=form)
 
 
-# def admin(user):
-#     existing_user=User.query.filter_by(username='Admin').first()
-#     print(user.id)
-#     print(current_user.id)
-#     if user.id == existing_user.id:
-#         print(user.username)
-
 @app.route('/role')
 def role():
     return render_template('amazon.html')
 
-
-def roles():
-    user= User.query.filter_by(username='Admin').first()
-    user
 

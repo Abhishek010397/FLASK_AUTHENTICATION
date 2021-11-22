@@ -17,8 +17,8 @@
 
    {% if current_user.role == 'Admin' %}
      <a href = "{{url_for('role')}}"><button>Role</button></a>
+   {% else %}
+     <a href = "{{url_for('logout')}}"><button>Logout</button></a>
    {% endif %}
-
-<a href = "{{url_for('logout')}}"><button>Logout</button></a>
 </body>
 </html>
