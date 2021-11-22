@@ -12,8 +12,13 @@
         Hi {{ current_user.username }}!
       {% endif %}
     {% endif %}
-  You can find all your Information
-</p>
+    You can find all your Information
+</p></br>
+
+   {% if current_user.username == 'Admin' %}
+     <a href = "{{url_for('role')}}"><button>Role</button></a>
+   {% endif %}
+
 <a href = "{{url_for('logout')}}"><button>Logout</button></a>
 </body>
 </html>

@@ -1,4 +1,5 @@
-from flask import render_template,url_for,redirect, flash
+import functools
+from flask import render_template,url_for,redirect, flash, abort
 from flaskacl import app, db, bcrypt
 from flaskacl.forms import LoginForm,RegistrationForm
 from flaskacl.models import User
@@ -52,4 +53,19 @@ def register():
 
     return render_template('register.html', form=form)
 
+
+# def admin(user):
+#     existing_user=User.query.filter_by(username='Admin').first()
+#     print(user.id)
+#     print(current_user.id)
+#     if user.id == existing_user.id:
+#         print(user.username)
+
+@app.route('/role')
+def role():
+    return render_template('amazon.html')
+
+
+
+            
 
