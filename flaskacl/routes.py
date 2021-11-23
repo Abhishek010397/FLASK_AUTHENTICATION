@@ -1,5 +1,4 @@
-import functools
-from flask import render_template,url_for,redirect, flash, abort
+from flask import render_template,url_for,redirect, flash, session
 from flaskacl import app, db, bcrypt
 from flaskacl.forms import LoginForm,RegistrationForm
 from flaskacl.models import User
@@ -19,6 +18,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
+            session.permanent = True
             return redirect(url_for('dashboard'))
         else:
             flash('Login Unsuccessful')
@@ -39,23 +39,23 @@ def dashboard():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     form=RegistrationForm()
     if form.validate_on_submit():
         #create hashed password for new generated user
         hashed_password= bcrypt.generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password=hashed_password)
+        new_user = User(username=form.username.data, password=hashed_password,role=form.role.data)
         db.session.add(new_user)
         db.session.commit()
         flash('Your Account is created! Login to Continue')
-        return redirect(url_for('login'))
+        return redirect(url_for('register'))
 
     return render_template('register.html', form=form)
 
 
-@app.route('/role')
-def role():
-    return render_template('amazon.html')
+# @app.route('/role')
+# def role():
+#     return render_template('amazon.html')
 
 

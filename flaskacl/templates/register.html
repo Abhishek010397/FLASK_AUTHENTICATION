@@ -10,7 +10,13 @@
     {{ form.hidden_tag() }}
     {{ form.username }}
     {{ form.password }}
-    {{ form.submit }}
+    &ensp;&emsp;<label for="Role">Choose a Role:</label>
+    <select id="role" name="role">
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+    </select></br></br>
+    &ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;{{ form.submit }}
 </form>
+<p>&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;<a href = "{{url_for('logout')}}"><button>Logout</button></a></p>
 </body>
 </html>

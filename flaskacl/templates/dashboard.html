@@ -5,18 +5,18 @@
     <title>Dashboard</title>
 </head>
 <body>
-<h1>Welcome</h1>
+<h1>Welcome To DashBoard Page</h1>
 <p>
     {% if current_user.is_authenticated %}
       {% if current_user.is_active %}
         Hi {{ current_user.username }}!
       {% endif %}
     {% endif %}
-    You can find all your Information
 </p></br>
 
-   {% if current_user.role == 'Admin' %}
-     <a href = "{{url_for('role')}}"><button>Role</button></a>
+   {% if current_user.role == 'admin' %}
+      Register New Users!
+     &ensp;&emsp;<a href = "{{url_for('register')}}"><button>Register</button></a>
    {% else %}
      <a href = "{{url_for('logout')}}"><button>Logout</button></a>
    {% endif %}

@@ -6,6 +6,7 @@ from flaskacl.models import User
 class RegistrationForm(FlaskForm):
     username=StringField(validators=[InputRequired(),Length(min=4, max=20)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
+    role= StringField(validators=[InputRequired(),Length(min=4, max=20)])
     submit=SubmitField("Register")
 
     def validate_username(self,username):
