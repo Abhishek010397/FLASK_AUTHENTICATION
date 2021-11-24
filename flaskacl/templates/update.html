@@ -2,19 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Update</title>
 </head>
 <body>
-<h1>Welcome to New User Registration</h1>
+<h1>Update Your User</h1>
+Hi {{ current_user.username }}!</br></br>
 <form method="post" action="">
     {{ form.hidden_tag() }}
     {{ form.username }}
     {{ form.password }}
-    &ensp;&emsp;<label for="Role">Choose a Role:</label>
-    <select id="role" name="role">
-        <option value="admin">Admin</option>
-        <option value="user">User</option>
-    </select></br></br>
+    {% if current_user.role == 'admin' %}
+      &ensp;&emsp;<label for="Role">Choose a Role:</label>
+      <select id="role" name="role">
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+      </select></br></br>
+    {% endif %}
     &ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;{{ form.submit }}
 </form>
 <p>&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;<a href = "{{url_for('dashboard')}}"><button>Back</button></a></p>
@@ -29,4 +32,3 @@
 {% endwith %}
 </body>
 </html>
-

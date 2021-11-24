@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hi! Welcome to Website</title>
+    <title>Users</title>
 </head>
 <body>
+<h1>Registered Users</h1>
+{% for user in users %}
 <p>
-  Your are Welcome !
-</p>
-<a href = "{{url_for('logout')}}"><button>Logout</button></a>
+    {{user.id}}
+    {{user.username}}
+    {{user.role}}
+</p><hr>
+{% endfor %}
+<a href = "{{url_for('dashboard')}}"><button>Back</button></a>
 </body>
 </html>
