@@ -18,5 +18,15 @@
     &ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;{{ form.submit }}
 </form>
 <p>&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;<a href = "{{url_for('logout')}}"><button>Logout</button></a></p>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 </body>
 </html>
+

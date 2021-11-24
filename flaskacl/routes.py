@@ -21,7 +21,7 @@ def login():
             session.permanent = True
             return redirect(url_for('dashboard'))
         else:
-            flash('Login Unsuccessful')
+            flash('Login Unsuccessful, Please Check Your Password')
     return render_template('login.html', form=form)
 
 @app.route('/logout', methods=['GET','POST'])
@@ -39,7 +39,7 @@ def dashboard():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
-    if not current_user.is_authenticated:
+    if not current_user.role == 'admin':
         return redirect(url_for('login'))
     form=RegistrationForm()
     if form.validate_on_submit():
@@ -48,14 +48,10 @@ def register():
         new_user = User(username=form.username.data, password=hashed_password,role=form.role.data)
         db.session.add(new_user)
         db.session.commit()
-        flash('Your Account is created! Login to Continue')
+        flash('Registration Successful!!')
         return redirect(url_for('register'))
 
     return render_template('register.html', form=form)
 
-
-# @app.route('/role')
-# def role():
-#     return render_template('amazon.html')
 
 
