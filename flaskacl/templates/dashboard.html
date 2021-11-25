@@ -17,7 +17,6 @@
    {% if current_user.role == 'admin' %}
       Register New Users!
      &ensp;&emsp;<a href = "{{url_for('register')}}"><button>Register</button></a>
-     &emsp;<a href = "{{url_for('update')}}"><button>Update</button></a>
      &emsp;<a href = "{{url_for('retrieveuserlist')}}"><button>List All Users</button></a>
      &emsp;<a href = "{{url_for('logout')}}"><button>Logout</button></a>
    {% else %}

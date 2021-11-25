@@ -56,13 +56,12 @@ def register():
 
 @app.route('/update', methods=['GET', 'POST'])
 def update():
-    if not current_user.role == 'admin' and not current_user.role == 'user':
+    if not current_user.role == 'user':
         return render_template('login')
     form = UpdateForm()
-    current_form_user = User.query.filter_by(username=current_user.username).first()
-    current_user_id = current_form_user.id
-    user = User.query.filter_by(id=current_user_id).first()
-    assigned_role = User.query.get(current_user_id).role
+    user_id = current_user.id
+    assigned_role = current_user.role
+    user = User.query.filter_by(id=user_id).first()
     if request.method == 'POST':
         if user:
             db.session.delete(user)
@@ -70,11 +69,11 @@ def update():
             if form.submit():
                 username = form.username.data
                 password = bcrypt.generate_password_hash(form.password.data)
-                update_user = User(id=current_user_id, username=username, password=password, role=assigned_role)
+                update_user = User(id=user_id, username=username, password=password, role=assigned_role)
                 db.session.add(update_user)
                 db.session.commit()
                 flash('Update Successful!!')
-                return redirect(url_for('login'))
+                return redirect(url_for('logout'))
 
     return render_template('update.html', form=form)
 
