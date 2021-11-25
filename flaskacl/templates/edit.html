@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<form method="post" action="">
+  <p>Name     <input type = "text" name = "name" id ="name" value= "{{user.username}}" /></p>
+  <p>Password <input type = "password" name = "password"  id="password" value= "{{user.password}}" /></p>
+  <label for="Role">Role</label>
+  <select name="role" id = "role">
+    <option value="{{user.role}}">{{user.role}}</option>
+    <option value="admin">admin</option>
+  </select></br></br>
+  <p>&ensp;&emsp;&ensp;&emsp;&ensp;<input type = "submit" value = "Update" /></p>
+</form>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;<a href = "{{url_for('retrieveuserlist')}}"><button>Back</button></a>
+</body>
+</html>

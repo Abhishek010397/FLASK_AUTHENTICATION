@@ -11,8 +11,19 @@
     {{user.id}}
     {{user.username}}
     {{user.role}}
+    &ensp;&emsp;<a href = "{{url_for('edit',id=user['id'])}}"><button>Edit</button></a>
+    &ensp;&emsp;<a href = "{{url_for('delete',id=user['id'])}}"><button>Delete</button></a>
 </p><hr>
 {% endfor %}
-<a href = "{{url_for('dashboard')}}"><button>Back</button></a>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;&emsp;<a href = "{{url_for('dashboard')}}"><button>Back</button></a>
 </body>
 </html>

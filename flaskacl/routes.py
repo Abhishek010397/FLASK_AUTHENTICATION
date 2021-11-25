@@ -40,7 +40,7 @@ def dashboard():
 @app.route('/register', methods=['GET','POST'])
 def register():
     if not current_user.role == 'admin':
-        return redirect(url_for('login'))
+        return redirect(url_for('logout'))
     form=RegistrationForm()
     if form.validate_on_submit():
         #create hashed password for new generated user
@@ -57,7 +57,7 @@ def register():
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     if not current_user.role == 'user':
-        return render_template('login')
+        return render_template('logout')
     form = UpdateForm()
     user_id = current_user.id
     assigned_role = current_user.role
@@ -83,3 +83,46 @@ def retrieveuserlist():
     if current_user.role == 'admin':
         users = User.query.all()
         return render_template('user.html',users=users)
+
+@app.route('/edit/<int:id>',methods=['GET', 'POST'])
+def edit(id):
+    if not current_user.role == 'admin':
+        return redirect(url_for('logout'))
+    user=User.query.filter_by(id=id).first()
+    user_password=user.password
+    form=UpdateForm()
+    if request.method == 'POST':
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            if form.submit():
+                username=request.form['name']
+                password=request.form['password']
+                if password == user_password:
+                    print('Matched')
+                    role=form.role.data
+                    updated_user=User(id=id,username=username,password=password,role=role)
+                    db.session.add(updated_user)
+                    db.session.commit()
+                    flash("User Has Been Updated")
+                    return redirect(f'/edit/{id}')
+                else:
+                    print('Unmatched')
+                    role = form.role.data
+                    updated_user = User(id=id, username=username, password=bcrypt.generate_password_hash(password),role=role)
+                    db.session.add(updated_user)
+                    db.session.commit()
+                    flash("User Has Been Updated")
+                    return redirect(f'/edit/{id}')
+    return render_template('edit.html', form=form, user=user)
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    if not current_user.role == 'admin':
+        return redirect(url_for('logout'))
+    user=User.query.get(id)
+    db.session.delete(user)
+    db.session.commit()
+    flash('User Has Been Deleted')
+    return redirect(url_for('retrieveuserlist'))
