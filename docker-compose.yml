@@ -1,0 +1,20 @@
+app:
+  build: .
+  command: bash -c "python3 -u initialise_database.py && python3 -u run.py"
+  ports:
+    - "5001:5001"
+  volumes:
+    - /app_data
+  links:
+    - db
+db:
+  image: mongo:latest
+  hostname: test_mongodb
+  environment:
+    - MONGO_INITDB_DATABASE=users_db
+    - MONGO_INITDB_ROOT_USERNAME=root
+    - MONGO_INITDB_ROOT_PASSWORD=pass
+  volumes:
+    - /db_data
+  ports:
+    - 27017:27017

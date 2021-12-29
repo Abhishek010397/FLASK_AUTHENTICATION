@@ -1,0 +1,15 @@
+image: creatiwww/docker-compose:latest
+
+services:
+  - docker:dind
+
+stages:
+  - RUN-APPLICATION
+
+
+run_application:
+  stage: RUN-APPLICATION
+  script:
+    - docker-compose up -d
+  tags:
+    - docker-cicd
